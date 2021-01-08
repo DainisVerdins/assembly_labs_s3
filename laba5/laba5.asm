@@ -4,6 +4,9 @@ Comment &
   
 &
 
+;TODO NEED TO FIX 63 ROW AND FIGUROUT ABOUT LOCAL VARIABLES IN PROCEDURES!!!
+
+
 .model small
 .stack 100
 .data
@@ -26,7 +29,7 @@ S    Equ    Type Matrix
 ;range)counts AVG and puts the result(quotient?) in Vector
 ;INPUTS - row count of matrix,col count of matrix,Matrix addr,Vector addr
 ;
-
+;-----------------------------------------------------------------------
 MatrixProcessing Proc
         push Bp
         mov Bp,Sp    ;get stack top
@@ -37,14 +40,6 @@ MatrixProcessing Proc
         Mov Cx, [Bp+4]
         Mov [Bp-2],Cx
         
-        
-        ;get col
-        Local cols_count:Word;_count:Word ;local var
-        Sub Sp,2           ;hmm
-        Mov Cx, [Bp+6] ;get col num
-        Mov [Bp-4],Cx ;TODO need figure out how to use variable
-        
-        
         ;get Matrix
         mov Bx, [Bp+8] 
 
@@ -52,8 +47,6 @@ MatrixProcessing Proc
         Mov DI,[Bp+10]
         
         xor SI,SI
-        
-        mov Cx,[Bp-4]
         
 ;--nested loop        
 Rows:   Push    Cx
@@ -67,8 +60,8 @@ Cols:   test [BX][SI], Word Ptr 1
         Add Ax,[BX][SI]
         inc dl
 ODD:
-        Add  Bx, M*S ;move iterator; S*M ;TODO fix using M 
-        Loop    Cols
+        Add  Bx,  M*S ; NOT WORKING [Bp-4]*S and  
+        Loop Cols
             
         cmp dl,0
         je ZERODIV
@@ -92,7 +85,7 @@ MatrixProcessing EndP
 ;proc for printingVector
 ;prints vector IMITATION
 ;inputs - col count of matrix, addr of Vector
-;
+;----------------------------------------------------------
 PrintVector Proc
         push Bp
         mov Bp,Sp    ;get stack top
@@ -102,7 +95,7 @@ PrintVector Proc
         ;get addr of Vector
         Mov DI,[Bp+6]
 
-Print:  Mov    Ax, [DI] ; moves data from vector into AX reg
+Print:  Mov    Ax, [DI] ; moves data from vector into AX 
         Add    Di, S ;inc index
         Loop    Print
 
@@ -112,10 +105,6 @@ PrintVector EndP
 
 
 .startup
-   ; Xor    Bx, Bx
-    ;Xor Si,Si
-   ; Mov    Cx, M
-   ; Lea    Di, Vector ; Vector now in Di
    Lea Ax,Vector
    push AX
    Lea Ax,Matrix
@@ -133,10 +122,6 @@ CALL MatrixProcessing
     Mov AX, M ;placing M into stack
     push Ax
     CALL PrintVector ; CALLING procedure
-    
-;Print:    Mov    Ax, Vector[Bx]
-  ;  Add    Bx, S
-   ; Loop    Print
         
 .exit 0
 end
