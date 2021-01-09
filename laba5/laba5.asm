@@ -4,11 +4,11 @@ Comment &
   
 &
 
-;TODO NEED TO FIX 63 ROW AND FIGUROUT ABOUT LOCAL VARIABLES IN PROCEDURES!!!
+;TODO NEED TO FIX 82 ROW AND FIGUROUT ABOUT LOCAL VARIABLES IN PROCEDURES!!!
 
 
 .model small
-.stack 100
+.stack 256
 .data
 N    Equ 2 ;rows
 M     Equ    3 ;colons
@@ -37,10 +37,25 @@ MatrixProcessing Proc
         ;get rows
         Local rowsCount:Word ;local var
         Sub Sp,2
-        Mov Cx, [Bp+4]
-        Mov [Bp-2],Cx
-        
-        ;get Matrix
+        mov Cx,[Bp+4]
+        Mov [Bp-2], Cx ;get rows number
+
+        LOCAL colCount:Word
+        Sub Sp,2
+        mov Cx,[Bp+6]
+        mov [Bp-4], cx ;INTO LOCAL MEMORY COL NUMBER
+
+        LOCAL varForAX:Word ;here will be stored var for swaps
+        Sub Sp,2
+        mov Cx,0
+        mov [Bp-6], cx ;INTO LOCAL MEMORY 0
+
+        LOCAL varForBX:Word ;here will be stored var for swaps
+        Sub Sp,2
+        mov Cx,0
+        mov [Bp-8], cx ;INTO LOCAL MEMORY 0
+
+        ;get Matrix adrres
         mov Bx, [Bp+8] 
 
         ;get VectorMov
@@ -60,7 +75,11 @@ Cols:   test [BX][SI], Word Ptr 1
         Add Ax,[BX][SI]
         inc dl
 ODD:
-        Add  Bx,  M*S ; NOT WORKING [Bp-4]*S and  
+        ;in [Bp-4] is col number stored
+        ;in [BP-2] is row number stored
+        ;int [Bp-6] is place for AX
+        ; [Bp-8] for BX 
+        Add  Bx, M*S ;NEED TO FIX SOMEHOW
         Loop Cols
             
         cmp dl,0
