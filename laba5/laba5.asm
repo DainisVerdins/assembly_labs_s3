@@ -16,8 +16,8 @@ M     Equ    3 ;colons
 Min    Equ    2
 Max    Equ    6
 
-Matrix    DW    2, 2, 1  ; 
-          DW    4, 2, 1  ; 
+Matrix    DW    2, 6, 1  ; 
+          DW    4, 4, 1  ; 
 Vector    DW    M Dup (?)
 
 S    Equ    Type Matrix
@@ -35,25 +35,11 @@ MatrixProcessing Proc
         mov Bp,Sp    ;get stack top
         
         ;get rows
-        Local rowsCount:Word ;local var
+        Local ROWSTEP:Word ;local var
         Sub Sp,2
-        mov Cx,[Bp+4]
+        mov Cx,9
         Mov [Bp-2], Cx ;get rows number
 
-        LOCAL colCount:Word
-        Sub Sp,2
-        mov Cx,[Bp+6]
-        mov [Bp-4], cx ;INTO LOCAL MEMORY COL NUMBER
-
-        LOCAL varForAX:Word ;here will be stored var for swaps
-        Sub Sp,2
-        mov Cx,0
-        mov [Bp-6], cx ;INTO LOCAL MEMORY 0
-
-        LOCAL varForBX:Word ;here will be stored var for swaps
-        Sub Sp,2
-        mov Cx,0
-        mov [Bp-8], cx ;INTO LOCAL MEMORY 0
 
         ;get Matrix adrres
         mov Bx, [Bp+8] 
@@ -66,7 +52,7 @@ MatrixProcessing Proc
 ;--nested loop        
 Rows:   Push    Cx
 
-        Mov    Cx, [Bp-2]  ;loop 2 times ;rowsCount
+        Mov    Cx, [Bp+4]  ;loop 2 times ;ROWSTEP
         Xor    Ax, Ax
         xor    dl,dl
 
@@ -79,7 +65,12 @@ ODD:
         ;in [BP-2] is row number stored
         ;int [Bp-6] is place for AX
         ; [Bp-8] for BX 
-        Add  Bx, M*S ;NEED TO FIX SOMEHOW
+        ;mov Ax,[Bp+6]
+        mov ROWSTEP,AX
+        mov AX,S
+        mul word Ptr [Bp+6] ;need type ovverride
+        Add  Bx, AX ;NEED TO FIX SOMEHOW M*S
+        mov AX,ROWSTEP
         Loop Cols
             
         cmp dl,0
@@ -138,7 +129,7 @@ CALL MatrixProcessing
     ;Xor Bx, Bx
     Lea Ax ,Vector ;putting Vect into stack
     push Ax
-    Mov AX, M ;placing M into stack
+    Mov AX, word Ptr M ;placing M into stack
     push Ax
     CALL PrintVector ; CALLING procedure
         
