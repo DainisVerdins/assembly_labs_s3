@@ -4,7 +4,7 @@ Comment &
   
 &
 
-;TODO NEED TO FIX 82 ROW AND FIGUROUT ABOUT LOCAL VARIABLES IN PROCEDURES!!!
+;DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 
 
 .model small
@@ -34,13 +34,14 @@ MatrixProcessing Proc
         push Bp
         mov Bp,Sp    ;get stack top
         
-        ;get rows
+        ;is var for what times increase BX index
         Local ROWSTEP:Word ;local var
-        Sub Sp,2
-        mov Cx,9
-        Mov [Bp-2], Cx ;get rows number
+        Sub sp,2
+        mov AX,S
+        mul word Ptr [Bp+6] 
+        Mov [Bp-2], AX 
 
-
+        ;[Bp+6] col count
         ;get Matrix adrres
         mov Bx, [Bp+8] 
 
@@ -52,7 +53,7 @@ MatrixProcessing Proc
 ;--nested loop        
 Rows:   Push    Cx
 
-        Mov    Cx, [Bp+4]  ;loop 2 times ;ROWSTEP
+        Mov    Cx, [Bp+4]  ;loop rows length times ;
         Xor    Ax, Ax
         xor    dl,dl
 
@@ -61,16 +62,8 @@ Cols:   test [BX][SI], Word Ptr 1
         Add Ax,[BX][SI]
         inc dl
 ODD:
-        ;in [Bp-4] is col number stored
-        ;in [BP-2] is row number stored
-        ;int [Bp-6] is place for AX
-        ; [Bp-8] for BX 
-        ;mov Ax,[Bp+6]
-        mov ROWSTEP,AX
-        mov AX,S
-        mul word Ptr [Bp+6] ;need type ovverride
-        Add  Bx, AX ;NEED TO FIX SOMEHOW M*S
-        mov AX,ROWSTEP
+
+        Add  Bx, ROWSTEP 
         Loop Cols
             
         cmp dl,0
@@ -126,7 +119,6 @@ PrintVector EndP
 CALL MatrixProcessing
 
 ; data what will be inputed for stack for proc
-    ;Xor Bx, Bx
     Lea Ax ,Vector ;putting Vect into stack
     push Ax
     Mov AX, word Ptr M ;placing M into stack
