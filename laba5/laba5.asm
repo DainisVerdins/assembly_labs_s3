@@ -5,7 +5,7 @@ Comment &
 &
 
 ;DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-
+; TODO CHECK ON TEST EXAMPLES I AM NOT SURE WHAT ALL IS FINE
 
 .model small
 .stack 256
@@ -38,7 +38,7 @@ MatrixProcessing Proc
         Local ROWSTEP:Word ;local var
         Sub sp,2
         mov AX,S
-        mul word Ptr [Bp+6] 
+        mul word Ptr [Bp+6] ;m
         Mov [Bp-2], AX 
 
         ;[Bp+6] col count
@@ -72,7 +72,7 @@ ODD:
 
 ZERODIV:
         Mov    [Di], Ax ;put into result vector
-        Add    Di, S  ;into next index
+        Add    Di, S  ;into next index of result vector
            
         Pop     Cx
         Add    Si, S
