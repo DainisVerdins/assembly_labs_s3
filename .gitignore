@@ -1,0 +1,4 @@
+#ignore all obj files
+laba6/*.OBJ
+#ignore all map files
+#all tr files 
