@@ -1,7 +1,8 @@
 #ignore all obj files
-/laba6/**
- *.MAP
- /laba5/**
- *.MAP
+/**/*.MAP
 #ignore all map files
+/**/*.TR
 #all tr files 
+/**/*.OBJ
+#td
+/**/*.TD
