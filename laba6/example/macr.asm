@@ -15,7 +15,6 @@ Rows:       push    Cx ; ?????????????
             xor    dl,dl
 
 Cols:       test _Matrix[BX+SI], Word Ptr 1
-            mov Ax,_Matrix[BX+SI]
             Jnz ODD          
             Add Ax,_Matrix[BX][SI]
             inc dl

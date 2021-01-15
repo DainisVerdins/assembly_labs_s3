@@ -1,4 +1,5 @@
 #ignore all obj files
-laba6/*.OBJ
+/laba6/**
+ *.MAP
 #ignore all map files
 #all tr files 
