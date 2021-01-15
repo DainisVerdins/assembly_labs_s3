@@ -15,9 +15,6 @@ include forvec.asm
     N    Equ    2 ;rows
     M    Equ    3 ;colons
 
-    Min    Equ    2
-    Max    Equ    6
-
     Matrix    DW    2, 6, 1  ; 
               DW    4, 4, 1  ; 
     Vector    DW    M Dup (?)
