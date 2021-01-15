@@ -14,6 +14,8 @@ Rows:       push    Cx ; ?????????????
             Xor    Ax, Ax
             xor    dl,dl
 
+            mov AX,_Matrix[BX+SI] ; NOT ANY VALUE IS STORED IN AX AFTER EXECUTING THIS COMMAND
+            ;mov ax, [Bx] also no value is putted into ax
 Cols:       test _Matrix[BX+SI], Word Ptr 1
             Jnz ODD          
             Add Ax,_Matrix[BX][SI]
