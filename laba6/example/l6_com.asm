@@ -19,7 +19,7 @@ include macr.asm
 Start:
 
             FormVector  N, M, Matrix, Vector, Min, Max, S
-            Print N, Vector    ; netika izmantots parametrs S - biistami!
+            Print M, Vector    ; netika izmantots parametrs S - biistami!
 
 .exit 0
 end

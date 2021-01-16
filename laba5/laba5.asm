@@ -31,6 +31,11 @@ S    Equ    Type Matrix
 ;
 ;-----------------------------------------------------------------------
 MatrixProcessing Proc
+;input
+;[Bp+4] - row number
+;[Bp+6] - col number
+;[Bp+8] - matrix adress
+;[Bp+10] -vector address
         push Bp
         mov Bp,Sp    ;get stack top
         
@@ -41,15 +46,12 @@ MatrixProcessing Proc
         mul word Ptr [Bp+6] ;m
         Mov [Bp-2], AX 
 
-        ;[Bp+6] col count
-        ;get Matrix adrres
-        mov Bx, [Bp+8] 
+        mov Bx, [Bp+8] ;get Matrix adrres
 
-        ;get VectorMov
-        Mov DI,[Bp+10]
+        Mov DI,[Bp+10];get VectorMov
         
         xor SI,SI
-        
+        mov    Cx,[Bp+6]
 ;--nested loop        
 Rows:   Push    Cx
 

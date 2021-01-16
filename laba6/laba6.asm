@@ -1,10 +1,16 @@
+;DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 ;---------------------------------
 ;
-;
+;Forms ooutput vector from input matrix where
+; matrix is looped thru col-row manner 
+;number is checked if it is odd or not
+;if not counted and after passing thru all collon
+;calcs avarage not odd number of col and puts it into Vector
 ;-----------------------------------------
-; BE AWARE MACROS FILES NAME MUST BE MAX 6 SYBOLS OTHERWISE ERROR
+; BE AWARE MACROS FILES NAME MUST BE MAX 6 SYmBOLS OTHERWISE ERROR
 
 include forvec.asm
+include print.asm
 
 .model tiny
 ;.data
@@ -22,6 +28,6 @@ include forvec.asm
     S    Equ    Type Matrix
 Start:
     FormVector  N, M, Matrix, Vector, S
-        
+    Print M, Vector,S    ; now is using param S    
 .exit 0
 end
