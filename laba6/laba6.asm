@@ -9,6 +9,8 @@
 ;-----------------------------------------
 ; BE AWARE MACROS FILES NAME MUST BE MAX 6 SYmBOLS OTHERWISE ERROR
 
+; TODO SOMETHING ABOUT TO SHOW OUT IN CONSOLE THE RESULT OF VECTOR IN GRAPHIC MODE
+
 include forvec.asm
 include print.asm
 
