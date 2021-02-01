@@ -7,6 +7,11 @@
 .data 
 W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol
 W_BG_G_SYM Equ 01110010b ; white background, green symbol
+BLACK_BG_R_SYM Equ 0000100n; bkack bg and red foreground
+
+M    Equ    3 ;colons
+Vector    DW    2 ,3, 0
+Number DW 69
 .code
 .startup
 	mov	ax, 13	; row
@@ -27,12 +32,18 @@ W_BG_G_SYM Equ 01110010b ; white background, green symbol
  
 	; write symbols and attributes
     mov bx,0
-    mov ax,0
-    mov cx,6
+    ;mov ax,Vector[bx]
+	;inc ax
+	mov ax,Vector[bx]
+	add ax,48
+	;dec ax
+	;mov ax,Number
+    mov cx,M
+	;mov bl, 69
     ;BE AWARE DI+BX CAN ONLY BE TO INCRASE INDEX REGISTER OTHERWISER ERROR!
 loopec:
-    mov	byte ptr es:[di+bx], 'O'
-	mov	byte ptr es:[di+bx+1], W_BG_Y_SYM ; white background, red symbol
+    mov	word ptr es:[di+BX], ax
+	mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
 	add bx,2
    loop loopec
 
