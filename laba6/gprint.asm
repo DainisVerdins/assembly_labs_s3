@@ -1,25 +1,18 @@
-;prints data from vector into console using graphics
+;----------------------
+;"prints" out data from Vector in graphic mode
+;, input N- length of vector, _Vector Vector what contains data
+;-
 ;white bg and yellow symbol if for odd numbers
 ;white bg and green symbol is for even numbers
 ;black bg and red symbol is for zero
 
-;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-;BE AWARE THIS MUST BE COMPILED INTO .COM BECAUSE HERE IS USED MODEL TINY!!!!!!!!!!!!
-
-;TODO MAKE WHAT NUMBERS BIGGER THEN ONE DIGIT DISPLAY ALSO
-
-.model tiny
-.data 
-W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol	; odd
+GPrint Macro _N, _Vector
+    Local loopec,check_on_even,number_is_odd,next
+    W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol	; odd
 W_BG_G_SYM Equ 01110010b ; white background, green symbol ;even
 BLACK_BG_R_SYM Equ 0000100b; bkack bg and red foreground	;zero
 BLACK_BG_W_SYM	Equ 0000111b;for splitter sign
-
-M    Equ    3 ;colons
-Vector    DW    12 ,3, 0
-.code
-.startup
-	mov	ax, 13	; row
+    mov	ax, 13	; row
 	mov	bx, 39	; col
 
 	; calculate offset of the position in the video memory 
@@ -37,10 +30,10 @@ Vector    DW    12 ,3, 0
  
 	; write symbols and attributes
     mov bx,0
-    mov cx,M
+    mov cx,_N
     ;BE AWARE DI+BX CAN ONLY BE TO INCRASE INDEX REGISTER OTHERWISER ERROR!
 loopec:
-	mov ax,Vector[bx]	
+	mov ax,_Vector[bx]	
 ;--if value is zero
 	cmp ax,0
 	jne check_on_even
@@ -71,5 +64,6 @@ next:
 	add bx,2
    loop loopec
 	xor ax,ax
-.exit
-end
+EndM
+
+

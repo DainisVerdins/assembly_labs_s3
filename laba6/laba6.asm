@@ -13,7 +13,7 @@
 
 include forvec.asm
 include print.asm
-
+include gprint.asm
 .model tiny
 ;.data
 .code
@@ -23,7 +23,7 @@ include print.asm
     N    Equ    2 ;rows
     M    Equ    3 ;colons
 
-    Matrix    DW    2, 6, 1  ; 
+    Matrix    DW    4, 6, 1  ; 
               DW    4, 4, 1  ; 
     Vector    DW    M Dup (?)
 
@@ -31,5 +31,6 @@ include print.asm
 Start:
     FormVector  N, M, Matrix, Vector, S
     Print M, Vector,S    ; now is using param S    
+    Gprint M,Vector
 .exit 0
 end
