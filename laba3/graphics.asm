@@ -1,7 +1,12 @@
+;prints data from vector into console using graphics
+;white bg and yellow symbol if for odd numbers
+;white bg and green symbol is for even numbers
+;black bg and red symbol is for zero
+
 .model tiny
 .data 
-W_BG_R_SYM Equ 01110100b
-W_BG_G_SYM Equ 01110010b
+W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol
+W_BG_G_SYM Equ 01110010b ; white background, green symbol
 .code
 .startup
 	mov	ax, 13	; row
@@ -27,20 +32,9 @@ W_BG_G_SYM Equ 01110010b
     ;BE AWARE DI+BX CAN ONLY BE TO INCRASE INDEX REGISTER OTHERWISER ERROR!
 loopec:
     mov	byte ptr es:[di+bx], 'O'
-    test ax,1
-    jnz oddec
-	;mov	byte ptr es:[di+bx], 'O'
-	mov	byte ptr es:[di+bx+1], W_BG_R_SYM ; white background, red symbol
-    jmp here
-oddec:
-    ;mov	byte ptr es:[di+bx+1], 'K'
-	mov	byte ptr es:[di+bx+1], W_BG_G_SYM ; white background, red symbol
- here:
+	mov	byte ptr es:[di+bx+1], W_BG_Y_SYM ; white background, red symbol
 	add bx,2
-    inc ax
    loop loopec
-    ;mov	byte ptr es:[di+2], 'K'	
-	;mov	byte ptr es:[di+3], W_BG_R_SYM ; white background, red symbol
 
 .exit
 end
