@@ -36,16 +36,20 @@ GPrint Macro _N, _Vector
     mov bx,0
     mov cx,_N
     ;BE AWARE DI+BX CAN ONLY BE TO INCRASE INDEX REGISTER OTHERWISER ERROR!
+	;BX,DI,AX,CX,
+	XOR SI,SI
 loopec:
-	mov ax,_Vector[bx]	
+	mov ax,_Vector[SI]	
+
 ;--if value is zero
 	cmp ax,0
 	jne check_on_even
-	add ax,48 ;convert into char
-	mov	word ptr es:[di+BX], ax
+	add Ax,48 ;convert into char
+	mov	word ptr es:[di+BX],ax
 	mov	word ptr es:[di+BX+1], BLACK_BG_R_SYM 
 
 	jmp next
+
 ;--if value is even
 check_on_even:
 	test ax,1
@@ -54,20 +58,21 @@ check_on_even:
 	mov	word ptr es:[di+BX], ax
 	mov	word ptr es:[di+BX+1], W_BG_G_SYM ; white background, yellow symbol
 	jmp next
+
 ;-- if val is odd
 number_is_odd:
 	add ax,48 ;convert into char
-    mov	word ptr es:[di+BX], ax
+    mov	word ptr es:[di+BX], aX
 	mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
 next:
-;------splitter of nums ;it works but how not out of index of arr????S
-	;add bx,2
-	;mov word ptr es:[di+BX], '|'
-	;mov	word ptr es:[di+BX+1], BLACK_BG_W_SYM 	
-	;incrase index
-	add bx,2
-	loop loopec
 
+;------splitter of nums ;it works but how not out of index of arr????S
+
+;incrase index
+	add bx,2
+	add si,2 ;increase index of iterator of vector
+	loop loopec
+	xor dx,dx
 	Pop  Di Dx Cx Bx Ax
 
 EndM
