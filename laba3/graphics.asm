@@ -6,15 +6,17 @@
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ;BE AWARE THIS MUST BE COMPILED INTO .COM BECAUSE HERE IS USED MODEL TINY!!!!!!!!!!!!
 
+;TODO MAKE WHAT NUMBERS BIGGER THEN ONE DIGIT DISPLAY ALSO
+
 .model tiny
 .data 
 W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol	; odd
 W_BG_G_SYM Equ 01110010b ; white background, green symbol ;even
 BLACK_BG_R_SYM Equ 0000100b; bkack bg and red foreground	;zero
+BLACK_BG_W_SYM	Equ 0000111b;for splitter sign
 
 M    Equ    3 ;colons
 Vector    DW    12 ,3, 0
-Number DW 69
 .code
 .startup
 	mov	ax, 13	; row
@@ -60,7 +62,12 @@ number_is_odd:
 	add ax,48 ;convert into char
     mov	word ptr es:[di+BX], ax
 	mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
-next:	
+next:
+	;splitter of nums
+	add bx,2
+	mov word ptr es:[di+BX], '|'
+	mov	word ptr es:[di+BX+1], BLACK_BG_W_SYM 	
+	;splitter of nums
 	add bx,2
    loop loopec
 
