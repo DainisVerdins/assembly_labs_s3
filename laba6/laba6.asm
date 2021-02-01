@@ -23,14 +23,14 @@ include gprint.asm
     N    Equ    2 ;rows
     M    Equ    3 ;colons
 
-    Matrix    DW    4, 6, 1  ; 
-              DW    4, 4, 1  ; 
+    Matrix    DW    16, 6, 1  ; 
+              DW    16, 4, 1  ; 
     Vector    DW    M Dup (?)
-
+    Buffer    DW    6 Dup(?) ;Dw is 4 bytes aka 5 digits max plus sign
     S    Equ    Type Matrix
 Start:
     FormVector  N, M, Matrix, Vector, S
     Print M, Vector,S    ; now is using param S    
-    Gprint M,Vector
+    Gprint M,Vector,Buffer
 .exit 0
 end

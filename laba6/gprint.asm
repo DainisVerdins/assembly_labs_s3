@@ -6,7 +6,9 @@
 ;white bg and green symbol is for even numbers
 ;black bg and red symbol is for zero
 
-GPrint Macro _N, _Vector
+include digs.asm
+
+GPrint Macro _N, _Vector,_buffer
     Local loopec,check_on_even,number_is_odd,next
 
 	Push Ax Bx Cx Dx Di
@@ -62,8 +64,9 @@ check_on_even:
 ;-- if val is odd
 number_is_odd:
 	add ax,48 ;convert into char
-    mov	word ptr es:[di+BX], aX
-	mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
+	split_num_put_graphicaly_in_console W_BG_Y_SYM,_buffer
+   ; mov	word ptr es:[di+BX], aX
+	;mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
 next:
 
 ;------splitter of nums ;it works but how not out of index of arr????S
