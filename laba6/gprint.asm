@@ -8,10 +8,14 @@
 
 GPrint Macro _N, _Vector
     Local loopec,check_on_even,number_is_odd,next
+
+	Push Ax Bx Cx Dx Di
+
     W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol	; odd
-W_BG_G_SYM Equ 01110010b ; white background, green symbol ;even
-BLACK_BG_R_SYM Equ 0000100b; bkack bg and red foreground	;zero
-BLACK_BG_W_SYM	Equ 0000111b;for splitter sign
+	W_BG_G_SYM Equ 01110010b ; white background, green symbol ;even
+	BLACK_BG_R_SYM Equ 0000100b; bkack bg and red foreground	;zero
+	BLACK_BG_W_SYM	Equ 0000111b;for splitter sign
+	
     mov	ax, 13	; row
 	mov	bx, 39	; col
 
@@ -62,8 +66,10 @@ next:
 	;mov	word ptr es:[di+BX+1], BLACK_BG_W_SYM 	
 	;incrase index
 	add bx,2
-   loop loopec
-	xor ax,ax
+	loop loopec
+
+	Pop  Di Dx Cx Bx Ax
+
 EndM
 
 
