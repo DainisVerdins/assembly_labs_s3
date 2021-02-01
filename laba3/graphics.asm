@@ -3,11 +3,14 @@
 ;white bg and green symbol is for even numbers
 ;black bg and red symbol is for zero
 
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;BE AWARE THIS MUST BE COMPILED INTO .COM BECAUSE HERE IS USED MODEL TINY!!!!!!!!!!!!
+
 .model tiny
 .data 
 W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol
 W_BG_G_SYM Equ 01110010b ; white background, green symbol
-BLACK_BG_R_SYM Equ 0000100n; bkack bg and red foreground
+BLACK_BG_R_SYM Equ 0000100b; bkack bg and red foreground
 
 M    Equ    3 ;colons
 Vector    DW    2 ,3, 0
@@ -32,18 +35,28 @@ Number DW 69
  
 	; write symbols and attributes
     mov bx,0
-    ;mov ax,Vector[bx]
-	;inc ax
 	mov ax,Vector[bx]
-	add ax,48
-	;dec ax
-	;mov ax,Number
+	add ax,48	;to convert into char
     mov cx,M
-	;mov bl, 69
     ;BE AWARE DI+BX CAN ONLY BE TO INCRASE INDEX REGISTER OTHERWISER ERROR!
 loopec:
+	mov ax,Vector[bx]
+	;add ax,48	
+;--if value is zero
+	cmp ax,0
+	jne check_on_even
+	add ax,48 ;convert into char
+	mov	word ptr es:[di+BX], ax
+	mov	word ptr es:[di+BX+1], BLACK_BG_R_SYM ; white background, yellow symbol
+
+	jmp next
+;--if value is even
+check_on_even:
+	
+;-- if val is odd
     mov	word ptr es:[di+BX], ax
 	mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
+next:	
 	add bx,2
    loop loopec
 
