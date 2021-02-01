@@ -64,9 +64,9 @@ check_on_even:
 ;-- if val is odd
 number_is_odd:
 	add ax,48 ;convert into char
-	split_num_put_graphicaly_in_console W_BG_Y_SYM,_buffer
-   ; mov	word ptr es:[di+BX], aX
-	;mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
+	split_num_put_in_buf _buffer
+	place_on_screen W_BG_Y_SYM,_buffer
+	clear_buffer _buffer
 next:
 
 ;------splitter of nums ;it works but how not out of index of arr????S
