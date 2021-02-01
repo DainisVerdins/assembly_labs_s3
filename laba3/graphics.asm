@@ -8,12 +8,12 @@
 
 .model tiny
 .data 
-W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol
-W_BG_G_SYM Equ 01110010b ; white background, green symbol
-BLACK_BG_R_SYM Equ 0000100b; bkack bg and red foreground
+W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol	; odd
+W_BG_G_SYM Equ 01110010b ; white background, green symbol ;even
+BLACK_BG_R_SYM Equ 0000100b; bkack bg and red foreground	;zero
 
 M    Equ    3 ;colons
-Vector    DW    2 ,3, 0
+Vector    DW    12 ,3, 0
 Number DW 69
 .code
 .startup
@@ -35,25 +35,29 @@ Number DW 69
  
 	; write symbols and attributes
     mov bx,0
-	mov ax,Vector[bx]
-	add ax,48	;to convert into char
     mov cx,M
     ;BE AWARE DI+BX CAN ONLY BE TO INCRASE INDEX REGISTER OTHERWISER ERROR!
 loopec:
-	mov ax,Vector[bx]
-	;add ax,48	
+	mov ax,Vector[bx]	
 ;--if value is zero
 	cmp ax,0
 	jne check_on_even
 	add ax,48 ;convert into char
 	mov	word ptr es:[di+BX], ax
-	mov	word ptr es:[di+BX+1], BLACK_BG_R_SYM ; white background, yellow symbol
+	mov	word ptr es:[di+BX+1], BLACK_BG_R_SYM 
 
 	jmp next
 ;--if value is even
 check_on_even:
-	
+	test ax,1
+	jnz number_is_odd
+	add ax,48 ;convert into char W_BG_G_SYM
+	mov	word ptr es:[di+BX], ax
+	mov	word ptr es:[di+BX+1], W_BG_G_SYM ; white background, yellow symbol
+	jmp next
 ;-- if val is odd
+number_is_odd:
+	add ax,48 ;convert into char
     mov	word ptr es:[di+BX], ax
 	mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
 next:	
