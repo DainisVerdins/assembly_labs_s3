@@ -8,7 +8,7 @@
 
 ;TODO MAKE WHAT NUMBERS BIGGER THEN ONE DIGIT DISPLAY ALSO
 
-.model tiny
+.model small
 .data 
 W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol	; odd
 W_BG_G_SYM Equ 01110010b ; white background, green symbol ;even
@@ -63,11 +63,6 @@ number_is_odd:
     mov	word ptr es:[di+BX], ax
 	mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
 next:
-;------splitter of nums ;it works but how not out of index of arr????S
-	;add bx,2
-	;mov word ptr es:[di+BX], '|'
-	;mov	word ptr es:[di+BX+1], BLACK_BG_W_SYM 	
-	;incrase index
 	add bx,2
    loop loopec
 	xor ax,ax

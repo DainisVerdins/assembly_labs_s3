@@ -1,7 +1,9 @@
 ;splits value into digits, puts them into buffer and 
 ;draws them into video memory field
 split_num_put_in_buf Macro _BUFFER
-                                        Local d,done
+                                        Local d,done,testec
+
+    ;TODO FINISHING THIS BUFFER NOT WORKING BY SOME MEENS!!!!!
     ;DI must be constant
     Push Ax Bx Cx Dx Di
 
@@ -19,6 +21,13 @@ d:  cwd
     dec di
     jmp d
 done:
+mov Cx,5
+mov Bx,0
+testec:
+    mov Ax,_BUFFER[Bx]
+    add Bx,2
+    loop testec
+
 Pop  Di Dx Cx Bx Ax
 EndM
 

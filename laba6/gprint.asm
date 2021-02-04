@@ -69,8 +69,6 @@ number_is_odd:
 	clear_buffer _buffer
 next:
 
-;------splitter of nums ;it works but how not out of index of arr????S
-
 ;incrase index
 	add bx,2
 	add si,2 ;increase index of iterator of vector
