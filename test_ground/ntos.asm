@@ -2,7 +2,7 @@
 
 .model small
 .data 
-NUM Equ -16
+NUM Equ 16
 string_buf    dw    0 ,0, 0
 .code
 .startup
@@ -15,7 +15,7 @@ string_buf    dw    0 ,0, 0
 
 d:	cwd			; extends ax to dx:ax
 	idiv	bx		; dx:ax/bx = dx-remainder,ax-quotient
-	;add	dl, 30h		; convert binary value of decimal digit to ASCII
+	add	dx, 30h		; convert binary value of decimal digit to ASCII
 	mov	string_buf[di], dx	; copy symbol of the digit into output buffer
 	cmp	ax, 0		; quotient = 0 ?
 	je	done

@@ -7,9 +7,10 @@
 ;black bg and red symbol is for zero
 
 include digs.asm
+include pos.asm
 
 GPrint Macro _N, _Vector,_buffer,_S
-    Local loopec,check_on_even,number_is_odd,next
+    Local loopec, check_on_even,number_is_odd, next
 
 	Push Ax Bx Cx Dx Di
 
@@ -63,19 +64,14 @@ check_on_even:
 
 ;-- if val is odd
 number_is_odd:
-	add ax,48 ;convert into char
-	mov ax,_Vector[0]
-	split_num_put_in_buf ax,_buffer;;it working in passes the param
-	mov ax,_buffer[0]
-	mov ax,_buffer[1]
-	mov ax,_buffer[2]
-	place_on_screen W_BG_Y_SYM,_buffer
+	split_num_put_in_buf ax,_buffer,_S;;it working in passes the param
+	;place_on_screen _buffer,_S,W_BG_Y_SYM ;couses jump out of range 016h
 	clear_buffer _buffer
 	
 next:
 
 ;incrase index
-	add bx,_S
+	;add bx,_S
 	add si,2 ;increase index of iterator of vector
 	loop loopec
 	xor dx,dx

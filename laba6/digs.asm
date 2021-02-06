@@ -1,43 +1,40 @@
 ;splits value into digits, puts them into buffer and 
 ;draws them into video memory field
-split_num_put_in_buf Macro NUM,_BUFFER
-                                        Local d,done
+split_num_put_in_buf Macro _NUM,_BUFFER,_S
+                        Local d,done,fin
 
     ;TODO FINISHING THIS BUFFER NOT WORKING BY SOME MEENS!!!!!
     ;DI must be constant
     Push Ax Bx Cx Dx Di
 
-   ; xor cx,Cx
-  ;  xor dx,Dx
-  ;  mov Bx,10
-  ;  mov DI ,4 ;size of buffer
-  ;  mov Ax,NUM
-;--loop what splits value into digits and places it into _buffer
-;d:  cwd
-  ;  idiv bx
-  ;  add dl,30h
-  ;  mov _BUFFER[di],dx
-   ; cmp ax,0 ; quotien ?= 0
-   ; je done
-    
-  ;  jmp d
-;done:
+    mov di,6
+    mov	bx, 10	; divisor - base of the decimal system
+    mov	AX, _NUM	; save the original value of ax
+    cmp ax,0;ax<0?
+    jge d;
+    neg ax
 
-;mov Cx,5
-;mov Bx,0
-;testec:
-;;    mov Ax,_BUFFER[Bx]
-;    add Bx,2
-;    loop testec
+d:	cwd			; extends ax to dx:ax
+	idiv	bx		; dx:ax/bx = dx-remainder,ax-quotient
+	add	DX, 30h		; convert binary value of decimal digit to ASCII
+	mov	_BUFFER[di], dx	; copy symbol of the digit into output buffer
+	cmp	ax, 0		; quotient = 0 ?
+	je	done
+	sub di ,_S		; next index value for the output buffer
+	jmp	d
+done:
+;add last sign symbol if exist
+    mov ax,_NUM
+    cmp ax,0
+    jge fin ;no
+    sub di,_S
+    mov _BUFFER[di], '-'
+fin:
 
 Pop  Di Dx Cx Bx Ax
 EndM
 
-place_on_screen Macro _Color_scheme,_BUFFER
-    ;-- loop what get data from buffer and places it on screen
-    mov	word ptr es:[di+BX],ax
-    mov	word ptr es:[di+BX+1], _Color_scheme ; white background, yellow symbol
-EndM
+
 
 clear_buffer Macro _buffer
 ;--loop what restores buffer by placing in it zeros

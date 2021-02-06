@@ -15,6 +15,7 @@ include forvec.asm
 include print.asm
 include gprint.asm
 .model tiny
+.stack 256
 ;.data
 .code
 .startup
@@ -26,7 +27,8 @@ include gprint.asm
     Matrix    DW    16, 6, 1  ; 
               DW    16, 4, 1  ; 
     Vector    DW    M Dup (?)
-    Buffer    DW    0,0,0,0 ;Dw is 4 bytes aka 5 digits max plus sign
+    ;35 in asci means #
+    Buffer    DW    35,35,35,35 ;Dw is 4 bytes aka 5 digits max plus sign
     S    Equ    Type Matrix
 Start:
     FormVector  N, M, Matrix, Vector, S
