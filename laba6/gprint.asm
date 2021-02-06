@@ -8,7 +8,7 @@
 
 include digs.asm
 
-GPrint Macro _N, _Vector,_buffer
+GPrint Macro _N, _Vector,_buffer,_S
     Local loopec,check_on_even,number_is_odd,next
 
 	Push Ax Bx Cx Dx Di
@@ -67,10 +67,11 @@ number_is_odd:
 	split_num_put_in_buf _buffer
 	place_on_screen W_BG_Y_SYM,_buffer
 	clear_buffer _buffer
+	
 next:
 
 ;incrase index
-	add bx,2
+	add bx,_S
 	add si,2 ;increase index of iterator of vector
 	loop loopec
 	xor dx,dx

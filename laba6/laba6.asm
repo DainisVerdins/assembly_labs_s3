@@ -31,6 +31,6 @@ include gprint.asm
 Start:
     FormVector  N, M, Matrix, Vector, S
     Print M, Vector,S    ; now is using param S    
-    Gprint M,Vector,Buffer
+    Gprint M,Vector,Buffer,S
 .exit 0
 end
