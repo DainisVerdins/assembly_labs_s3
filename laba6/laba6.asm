@@ -26,7 +26,7 @@ include gprint.asm
     Matrix    DW    16, 6, 1  ; 
               DW    16, 4, 1  ; 
     Vector    DW    M Dup (?)
-    Buffer    DW    6 Dup(?) ;Dw is 4 bytes aka 5 digits max plus sign
+    Buffer    DW    0,0,0,0 ;Dw is 4 bytes aka 5 digits max plus sign
     S    Equ    Type Matrix
 Start:
     FormVector  N, M, Matrix, Vector, S

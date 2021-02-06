@@ -64,7 +64,11 @@ check_on_even:
 ;-- if val is odd
 number_is_odd:
 	add ax,48 ;convert into char
-	split_num_put_in_buf _buffer
+	mov ax,_Vector[0]
+	split_num_put_in_buf ax,_buffer;;it working in passes the param
+	mov ax,_buffer[0]
+	mov ax,_buffer[1]
+	mov ax,_buffer[2]
 	place_on_screen W_BG_Y_SYM,_buffer
 	clear_buffer _buffer
 	
