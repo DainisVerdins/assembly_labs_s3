@@ -50,7 +50,7 @@ loopec:
 	add Ax,48 ;convert into char
 	mov	word ptr es:[di+BX],ax
 	mov	word ptr es:[di+BX+1], BLACK_BG_R_SYM 
-
+	add bx,_S
 	jmp next
 
 ;--if value is even
@@ -60,18 +60,24 @@ check_on_even:
 	add ax,48 ;convert into char W_BG_G_SYM
 	mov	word ptr es:[di+BX], ax
 	mov	word ptr es:[di+BX+1], W_BG_G_SYM ; white background, yellow symbol
+	add bx,_S
 	jmp next
 
 ;-- if val is odd
 number_is_odd:
-	split_num_put_in_buf ax,_buffer,_S;;it working in passes the param
-	;place_on_screen _buffer,_S,W_BG_Y_SYM ;couses jump out of range 016h
-	clear_buffer _buffer
+	;split_num_put_in_buf ax,_buffer,_S       ;;it working in passes the param
+	;place_on_screen _buffer,_S,W_BG_Y_SYM    ;couses jump out of range 016h
+	;clear_buffer _buffer                      ;emty define
 	
+	
+	;this way works but i want to put it all into defines
+	add ax,48 ;convert into char W_BG_G_SYM
+	mov	word ptr es:[di+BX], ax
+	mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
+	add bx,_S
 next:
 
 ;incrase index
-	;add bx,_S
 	add si,2 ;increase index of iterator of vector
 	loop loopec
 	xor dx,dx

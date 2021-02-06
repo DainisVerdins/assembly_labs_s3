@@ -1,11 +1,9 @@
-;splits value into digits, puts them into buffer and 
-;draws them into video memory field
+
 split_num_put_in_buf Macro _NUM,_BUFFER,_S
                         Local d,done,fin
-
-    ;TODO FINISHING THIS BUFFER NOT WORKING BY SOME MEENS!!!!!
-    ;DI must be constant
-    Push Ax Bx Cx Dx Di
+;splits NUM into ASCI digits, puts them into buffer and 
+;also places sign symbol if it is negative
+    Push Ax Bx Cx Dx Di Si
 
     mov di,6
     mov	bx, 10	; divisor - base of the decimal system
@@ -31,11 +29,11 @@ done:
     mov _BUFFER[di], '-'
 fin:
 
-Pop  Di Dx Cx Bx Ax
+Pop  Si Di Dx Cx Bx Ax
 EndM
 
 
 
 clear_buffer Macro _buffer
-;--loop what restores buffer by placing in it zeros
+;--loop what restores buffer by placing in it #
 EndM

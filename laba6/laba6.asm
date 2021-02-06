@@ -15,7 +15,6 @@ include forvec.asm
 include print.asm
 include gprint.asm
 .model tiny
-.stack 256
 ;.data
 .code
 .startup
@@ -24,8 +23,8 @@ include gprint.asm
     N    Equ    2 ;rows
     M    Equ    3 ;colons
 
-    Matrix    DW    16, 6, 1  ; 
-              DW    16, 4, 1  ; 
+    Matrix    DW    6, 16, 1  ; 
+              DW    4, 16, 1  ; 
     Vector    DW    M Dup (?)
     ;35 in asci means #
     Buffer    DW    35,35,35,35 ;Dw is 4 bytes aka 5 digits max plus sign
