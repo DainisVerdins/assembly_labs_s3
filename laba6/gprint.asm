@@ -57,29 +57,31 @@ loopec:
 check_on_even:
 	test ax,1
 	jnz number_is_odd
-	add ax,48 ;convert into char W_BG_G_SYM
+	add ax,48 
 	mov	word ptr es:[di+BX], ax
 	mov	word ptr es:[di+BX+1], W_BG_G_SYM ; white background, yellow symbol
 	add bx,_S
+	;split_num_put_in_buf ax,_buffer,_S
+	;place_on_screen _buffer,_S,W_BG_G_SYM    ;UNCONMENT AND ALSO ERROR APPIERS couses jump out of range 016h
+	;clear_buffer _buffer   
 	jmp next
 
 ;-- if val is odd
 number_is_odd:
-	;split_num_put_in_buf ax,_buffer,_S       ;;it working in passes the param
-	;place_on_screen _buffer,_S,W_BG_Y_SYM    ;couses jump out of range 016h
-	;clear_buffer _buffer                      ;emty define
-	
-	
-	;this way works but i want to put it all into defines
-	add ax,48 ;convert into char W_BG_G_SYM
-	mov	word ptr es:[di+BX], ax
-	mov	word ptr es:[di+BX+1], W_BG_Y_SYM ; white background, yellow symbol
-	add bx,_S
+	;mov Ax,-16 
+	split_num_put_in_buf ax,_buffer,_S       ;THIS RISES ERROR ;it calls macro from pos.asm file
+
+	place_on_screen _buffer,_S,W_BG_Y_SYM    ;UNCONMENT AND ALSO ERROR APPIERS couses jump out of range 016h
+	clear_buffer _buffer    
+	         ; add bx,_S        ;emty define
 next:
 
 ;incrase index
 	add si,2 ;increase index of iterator of vector
-	loop loopec
+        dec Cx       ; ***
+        Jz  _Finish  ; ***
+	Jmp loopec   ; ***
+_Finish:             ; ***
 	xor dx,dx
 	Pop  Di Dx Cx Bx Ax
 

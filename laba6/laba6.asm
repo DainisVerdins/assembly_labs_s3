@@ -24,7 +24,7 @@ include gprint.asm
     M    Equ    3 ;colons
 
     Matrix    DW    6, 16, 1  ; 
-              DW    4, 16, 1  ; 
+              DW    -4, 16, 1  ; 
     Vector    DW    M Dup (?)
     ;35 in asci means #
     Buffer    DW    35,35,35,35 ;Dw is 4 bytes aka 5 digits max plus sign

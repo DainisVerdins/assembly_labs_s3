@@ -20,10 +20,10 @@ d:  cmp si,6 ;size of _BUFFER is 6 if above jump
     je ignore
     mov	word ptr es:[di+BX],ax
     mov	word ptr es:[di+BX+1], _COLOR_SHEME 
-
+    
+    add Bx,_S ;step+=size of element*2 
 ignore:
     add si,_S   ;step+=2
-    add Bx,_S ;step+=size of element*2 
     jmp d
 
 done:
