@@ -57,13 +57,12 @@ Rows:   Push    Cx
 
         Mov    Cx, [Bp+4]  ;loop rows length times ;
         Xor    Ax, Ax
-        XOR BX,BX ;?
         xor    DX,DX
 
 Cols:   test [BX][SI], Word Ptr 1
         Jnz ODD          
         Add Ax,[BX][SI]
-        inc DX
+        inc dx
 ODD:
 
         Add  Bx, ROWSTEP 
@@ -71,9 +70,10 @@ ODD:
             
         cmp dx,0
         je ZERODIV
-        MOV CX,DX
-        CWD ;AX:AX:DX
-        idiv Cx ; AX/dl
+        mov ax,ax
+        mov cx,dx
+        cwd
+        idiv cx ; AX/dx
 
 ZERODIV:
         Mov    [Di], Ax ;put into result vector

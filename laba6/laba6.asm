@@ -23,11 +23,12 @@ include gprint.asm
     N    Equ    2 ;rows
     M    Equ    3 ;colons
 
-    Matrix    DW    6, 16, 1  ; 
-              DW    -4, 16, 1  ; 
+    Matrix    DW    -160, 100, -16  ; 
+              DW    -40, 100, -10  ; 
     Vector    DW    M Dup (?)
     ;35 in asci means #
-    Buffer    DW    35,35,35,35 ;Dw is 4 bytes aka 5 digits max plus sign
+    Buffer    DW    '#','#','#','#' ;Dw is 4 bytes aka 5 digits max plus sign
+    Buff_S   Equ 6 ;;it tells buffer size
     S    Equ    Type Matrix
 Start:
     FormVector  N, M, Matrix, Vector, S

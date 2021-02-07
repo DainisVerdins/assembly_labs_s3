@@ -47,39 +47,33 @@ loopec:
 ;--if value is zero
 	cmp ax,0
 	jne check_on_even
-	add Ax,48 ;convert into char
-	mov	word ptr es:[di+BX],ax
-	mov	word ptr es:[di+BX+1], BLACK_BG_R_SYM 
-	add bx,_S
+	split_num_put_in_buf ax,_buffer,_S
+	place_on_screen _buffer,_S,BLACK_BG_R_SYM   
+
 	jmp next
 
 ;--if value is even
 check_on_even:
 	test ax,1
 	jnz number_is_odd
-	add ax,48 
-	mov	word ptr es:[di+BX], ax
-	mov	word ptr es:[di+BX+1], W_BG_G_SYM ; white background, yellow symbol
-	add bx,_S
-	;split_num_put_in_buf ax,_buffer,_S
-	;place_on_screen _buffer,_S,W_BG_G_SYM    ;UNCONMENT AND ALSO ERROR APPIERS couses jump out of range 016h
-	;clear_buffer _buffer   
+	split_num_put_in_buf ax,_buffer,_S
+	place_on_screen _buffer,_S,W_BG_G_SYM 
 	jmp next
 
 ;-- if val is odd
 number_is_odd:
-	;mov Ax,-16 
-	split_num_put_in_buf ax,_buffer,_S       ;THIS RISES ERROR ;it calls macro from pos.asm file
+	split_num_put_in_buf ax,_buffer,_S       
+	place_on_screen _buffer,_S,W_BG_Y_SYM      
 
-	place_on_screen _buffer,_S,W_BG_Y_SYM    ;UNCONMENT AND ALSO ERROR APPIERS couses jump out of range 016h
-	clear_buffer _buffer    
-	         ; add bx,_S        ;emty define
-next:
-
+next: 
 ;incrase index
 	add si,2 ;increase index of iterator of vector
         dec Cx       ; ***
         Jz  _Finish  ; ***
+;--add spliting sign
+		mov	word ptr es:[di+BX],'|'
+		mov	word ptr es:[di+BX+1], BLACK_BG_W_SYM 
+		add bx,_S
 	Jmp loopec   ; ***
 _Finish:             ; ***
 	xor dx,dx

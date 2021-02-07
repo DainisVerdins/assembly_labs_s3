@@ -34,21 +34,21 @@ EndM
 
 
 
-clear_buffer Macro _buffer
-Local d,done
+clear_buffer Macro _BUFFER
+            Local _d,_Finish
 ;--loop what restores buffer by placing in it #
    Push Ax Bx Cx Dx Di Si
 
-    mov di,6 ;buffer size
-
-d:	
-    mov	_buffer[di], 35;'#' ;emtynes symbol
-    Sub di,2 ;here must be matrix type
-    cmp di,0
-    jl done
-	jmp	d
-done:
-
+    mov cx,6 ;buffer size
+    mov SI,0
+_d:	
+    mov	_BUFFER[SI], '#';'#' ;emtynes symbol
+    add SI,2
+    sub cx,2
+    jz _Finish
+	jmp	_d
+_Finish:
+    mov	_BUFFER[6], '#';'#' ;emtynes symbol
 Pop  Si Di Dx Cx Bx Ax
 
 

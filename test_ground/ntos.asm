@@ -3,7 +3,7 @@
 .model small
 .data 
 NUM Equ 16
-string_buf    dw    0 ,0, 0
+string_buf    dw    0 ,0, 0 
 .code
 .startup
     mov di,4

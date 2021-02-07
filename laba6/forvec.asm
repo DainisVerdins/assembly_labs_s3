@@ -17,21 +17,24 @@ Rows:       push    Cx
 
             Mov    Cx, _N  ;loop rows length times ;
             Xor    Ax, Ax
-            xor    dl,dl
+            xor    dx,dx
             xor    bx,bx
 
 Cols:       test _Matrix[BX+SI], Word Ptr 1
             Jnz ODD          
             Add Ax,_Matrix[BX][SI]
-            inc dl
+            inc dx
 ODD:
 
             Add  Bx, _M*_S 
             Loop Cols
                 
-            cmp dl,0
+            cmp dx,0
             je ZERODIV
-            idiv dl ; AX/dl
+            mov ax,ax
+            mov cx,dx
+            cwd
+            idiv cx ; AX/dx
 
 ZERODIV:
             Mov     [Di], Ax ;put into result vector
