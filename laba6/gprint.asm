@@ -9,7 +9,7 @@
 include digs.asm
 include pos.asm
 
-GPrint Macro _N, _Vector,_buffer,_S
+GPrint Macro _N, _Vector,_buffer,_buffer_size,_buff_emty_sign,_S
     Local loopec, check_on_even,number_is_odd, next
 
 	Push Ax Bx Cx Dx Di

@@ -23,18 +23,16 @@ include gprint.asm
     N    Equ    2 ;rows
     M    Equ    3 ;colons
 
-    Matrix    DW    -160, 1, -16  ; 
-              DW    -40, 1, -10  ; 
+    Matrix    DW    -160, 1000, 16  ; 
+              DW    -40, 1000, -10  ; 
     Vector    DW    M Dup (?)
     buffer_size   Equ 6; max value in DW could be 5 digits big +1 digit for sign = 6
-    buffer    DW  buffer_Size Dup(?);will hold digits for graphic output
     buff_emty_sign Equ '#'
-
+    buffer    DW  buffer_size Dup(buff_emty_sign);will hold digits for graphic output
     S    Equ    Type Matrix
 Start:
-  
     FormVector  N, M, Matrix, Vector, S
     Print M, Vector,S    ; just puts vectors data into ax register 
-    Gprint M,Vector,buffer,S    ;graphicaly outputs result into console
+    Gprint M,Vector,buffer,buffer_size,buff_emty_sign,S    ;graphicaly outputs result into console
 .exit 0
 end
