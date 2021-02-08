@@ -4,7 +4,7 @@ split_num_put_in_buf Macro _NUM,_BUFFER,_S
 ;splits NUM into ASCI digits, puts them into buffer and 
 ;also places sign symbol if it is negative
     Push Ax Bx Cx Dx Di Si
-
+;-- TODO FIX THIS BECAUSE BUFFER SIZZE COULD BEDIFERENT THEN 6
     mov di,6
     mov	bx, 10	; divisor - base of the decimal system
     mov	AX, _NUM	; save the original value of ax

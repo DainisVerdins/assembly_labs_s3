@@ -11,7 +11,9 @@ place_on_screen Macro _BUFFER,_S,_COLOR_SHEME
     mov si,0
 
 ;-- loop what get data from buffer and places it on screen
-d:  cmp si,6 ;size of _BUFFER is 6 if above jump
+;-- !!!! TODO FIX THIS BACAUSE SIZE OF BUFF COULD BE BOGGER THEN 6
+;-- 6 IS END POS IN BUFFER NOT ITS SIZE 
+d:  cmp si,6 ;POS OF  _BUFFER is 6 if above jump
     jg done
     mov ax,_BUFFER[si]
     mov _BUFFER[SI], '#' ;cleans after self buffer[i] ;KASTIL need to make macro for cleaning buff not like this!
