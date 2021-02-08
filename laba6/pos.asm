@@ -4,23 +4,29 @@
 ;       _S typ of matryx
 ;       _Color_sheme  digits color will be displayed 
 ;outputs bx changed its values after displaying digit it increases by _S at every digit placed from buff
-place_on_screen Macro _BUFFER,_S,_COLOR_SHEME
+place_on_screen Macro _BUFFER,_BUFFER_SIZE,_BUFF_EMTY_SIGN,_S,_COLOR_SHEME
                 Local d,ignore,done
-    Push Cx Dx Di Si
-
-    mov si,0
+    Push Ax Cx Dx Di Si
+;--calc last index of _BUFFER
+    mov Ax,_BUFFER_SIZE
+    mov DX,_S
+    mul DX
+    SUB ax,_S
+    mov dx,ax
+    xor ax,ax;clear afrter self ax
+    
 
 ;-- loop what get data from buffer and places it on screen
-;-- !!!! TODO FIX THIS BACAUSE SIZE OF BUFF COULD BE BOGGER THEN 6
-;-- 6 IS END POS IN BUFFER NOT ITS SIZE 
-d:  cmp si,6 ;POS OF  _BUFFER is 6 if above jump
+    mov si,0
+d:  cmp si,DX 
     jg done
-    mov ax,_BUFFER[si]
-    mov _BUFFER[SI], '#' ;cleans after self buffer[i] ;KASTIL need to make macro for cleaning buff not like this!
 
-    ;if # means no symbols in buffer pos ignore what
-    cmp ax,'#'
+    mov ax,_BUFFER[si]
+    mov _BUFFER[SI], _BUFF_EMTY_SIGN ;cleans after self buffer[i] ;KASTIL need to make macro for cleaning buff not like this!
+    
+    cmp ax,_BUFF_EMTY_SIGN
     je ignore
+    
     mov	word ptr es:[di+BX],ax
     mov	word ptr es:[di+BX+1], _COLOR_SHEME 
 
@@ -31,6 +37,5 @@ ignore:
 
 done:
 
-
-    Pop Si Di Dx Cx
+    Pop Si Di Dx Cx AX
 EndM

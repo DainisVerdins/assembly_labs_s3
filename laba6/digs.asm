@@ -1,11 +1,22 @@
 
-split_num_put_in_buf Macro _NUM,_BUFFER,_S
-                        Local d,done,fin
+split_num_put_in_buf Macro _NUM,_BUFFER,_BUFFER_SIZE,_S
+                        Local d,done,fin,overflow
 ;splits NUM into ASCI digits, puts them into buffer and 
 ;also places sign symbol if it is negative
     Push Ax Bx Cx Dx Di Si
 ;-- TODO FIX THIS BECAUSE BUFFER SIZZE COULD BEDIFERENT THEN 6
-    mov di,6
+
+    mov	AX, _NUM	; save the original value of ax
+    mov Cx,Ax ;save data
+;--caunt last pos in buffer
+    mov Ax,_BUFFER_SIZE
+    mov di,_S ;last pos buffer
+    mul DI
+    sub AX,_S
+    mov DI,AX
+
+    mov AX,CX;restore val in ax
+
     mov	bx, 10	; divisor - base of the decimal system
     mov	AX, _NUM	; save the original value of ax
     mov Cx,Ax ;save data
@@ -17,7 +28,13 @@ d:	cwd			; extends ax to dx:ax
 	idiv	bx		; dx:ax/bx = dx-remainder,ax-quotient
 	add	DX, 30h		; convert binary value of decimal digit to ASCII
 	mov	_BUFFER[di], dx	; copy symbol of the digit into output buffer
-	cmp	ax, 0		; quotient = 0 ?
+
+;this is to avoid buffer overflow 
+;if  digits in number are more than buf size quite	
+    cmp di,0    
+    je overflow
+    
+    cmp	ax, 0		; quotient = 0 ?
 	je	done
 	sub di ,_S		; next index value for the output buffer
 	jmp	d
@@ -27,6 +44,9 @@ done:
     jge fin ;no
     sub di,_S
     mov _BUFFER[di], '-'
+    jmp fin
+overflow:
+    mov _BUFFER[di], '@'
 fin:
 
 Pop  Si Di Dx Cx Bx Ax

@@ -9,13 +9,13 @@
 ;-----------------------------------------
 ; BE AWARE MACROS FILES NAME MUST BE MAX 6 SYmBOLS OTHERWISE ERROR
 
-; TODO SOMETHING ABOUT TO SHOW OUT IN CONSOLE THE RESULT OF VECTOR IN GRAPHIC MODE
-
 include forvec.asm
 include print.asm
 include gprint.asm
 .model tiny
 ;.data
+.386 ;this fixes jump out of memory error
+;https://stackoverflow.com/questions/16751025/relative-jump-out-of-range-by-0020h-bytes
 .code
 .startup
         Org 100h
@@ -23,20 +23,18 @@ include gprint.asm
     N    Equ    2 ;rows
     M    Equ    3 ;colons
 
-    Matrix    DW    -160, -100, 16  ; 
-              DW    -40, -100, -10  ; 
+    Matrix    DW    -1000, 0, -16  ; 
+              DW    -1000, 0, -10  ; 
     Vector    DW    M Dup (?)
     buffer_size   Equ 6; max value in DW could be 5 digits big +1 digit for sign = 6
     buff_emty_sign Equ '#'
     buffer    DW  buffer_size Dup(buff_emty_sign);will hold digits for graphic output
     S    Equ    Type Matrix
 Start:
-;==================================
-;-- TWO AT LEAST THE TODO TO DO!!!!!!!!!!!1
-;===================================
 
     FormVector  N, M, Matrix, Vector, S
-    Print M, Vector,S    ; just puts vectors data into ax register 
+    Print M, Vector,S    ; just loops and puts vectors data into ax register 
     Gprint M,Vector,buffer,buffer_size,buff_emty_sign,S    ;graphicaly outputs result into console
+
 .exit 0
 end
