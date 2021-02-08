@@ -38,8 +38,7 @@ GPrint Macro _N, _Vector,_buffer,_S
 	; write symbols and attributes
     mov bx,0
     mov cx,_N
-    ;BE AWARE DI+BX CAN ONLY BE TO INCRASE INDEX REGISTER OTHERWISER ERROR!
-	;BX,DI,AX,CX,
+;BE AWARE DI+BX CAN ONLY BE TO INCRASE INDEX REGISTER OTHERWISER ERROR!
 	XOR SI,SI
 loopec:
 	mov ax,_Vector[SI]	

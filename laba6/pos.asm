@@ -14,7 +14,7 @@ place_on_screen Macro _BUFFER,_S,_COLOR_SHEME
 d:  cmp si,6 ;size of _BUFFER is 6 if above jump
     jg done
     mov ax,_BUFFER[si]
-    mov _BUFFER[SI], '#' ;cleans after self buffer[i]
+    mov _BUFFER[SI], '#' ;cleans after self buffer[i] ;KASTIL need to make macro for cleaning buff not like this!
 
     ;if # means no symbols in buffer pos ignore what
     cmp ax,'#'

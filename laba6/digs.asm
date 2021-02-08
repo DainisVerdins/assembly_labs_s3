@@ -22,7 +22,7 @@ d:	cwd			; extends ax to dx:ax
 	sub di ,_S		; next index value for the output buffer
 	jmp	d
 done:
-;add last sign symbol if exist
+;--add last sign symbol if exist
     cmp cx,0
     jge fin ;no
     sub di,_S
@@ -30,26 +30,4 @@ done:
 fin:
 
 Pop  Si Di Dx Cx Bx Ax
-EndM
-
-
-
-clear_buffer Macro _BUFFER
-            Local _d,_Finish
-;--loop what restores buffer by placing in it #
-   Push Ax Bx Cx Dx Di Si
-
-    mov cx,6 ;buffer size
-    mov SI,0
-_d:	
-    mov	_BUFFER[SI], '#';'#' ;emtynes symbol
-    add SI,2
-    sub cx,2
-    jz _Finish
-	jmp	_d
-_Finish:
-    mov	_BUFFER[6], '#';'#' ;emtynes symbol
-Pop  Si Di Dx Cx Bx Ax
-
-
 EndM
