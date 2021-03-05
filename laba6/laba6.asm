@@ -23,8 +23,8 @@ include gprint.asm
     N    Equ    2 ;rows
     M    Equ    3 ;colons
 
-    Matrix    DW    -1000, 0, -16  ; 
-              DW    -1000, 0, -10  ; 
+    Matrix    DW    -9998, 0, -16  ; 
+              DW    -9998, 0, -10  ; 
     Vector    DW    M Dup (?)
     buffer_size   Equ 6; max value in DW could be 5 digits big +1 digit for sign = 6
     buff_emty_sign Equ '#'

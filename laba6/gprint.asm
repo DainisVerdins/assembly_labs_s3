@@ -12,7 +12,7 @@ include pos.asm
 GPrint Macro _N, _Vector,_buffer,_buffer_size,_buff_emty_sign,_S
     Local loopec, check_on_even,number_is_odd, next
 
-	Push Ax Bx Cx Dx Di
+	Push Ax Bx Cx Dx Di ;save data what is stored in those refisters
 
     W_BG_Y_SYM Equ 01111110b ; white background, yellow symbol	; odd
 	W_BG_G_SYM Equ 01110010b ; white background, green symbol ;even
@@ -26,8 +26,8 @@ GPrint Macro _N, _Vector,_buffer,_buffer_size,_buff_emty_sign,_S
 	
 	; calculate offset of the position in the video memory 
 	dec	ax	; row-1
-	mov	dl, 80	; 
-	imul	dl	; (row-1)*80
+	mov	dl, 80	; !mistical constants ; console with 
+	imul dl	; (row-1)*80
 	dec	bx	; col-1
 	add	ax, bx	; (row-1)*80 + (col-1)
 	add	ax, ax	; *2

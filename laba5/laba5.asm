@@ -35,29 +35,33 @@ MatrixProcessing Proc
 ;[Bp+6] - col number
 ;[Bp+8] - matrix adress
 ;[Bp+10] -vector address
+
         push Bp
         mov Bp,Sp    ;get stack top
         
-        sub sp,8        ;;added now pART
+       ; sub sp,8        ;get stack for two local variables
+
         ;is var for what times increase BX index
-        Local ROWSTEP:Word ;local var
+        Local ROWSTEP:Word 
         mov AX,S
-        mul word Ptr [Bp+6] ;m
-        Mov [Bp-8], AX ;MUST BE 2
-        mov BX,AX       ;;ignore this line
-        mov [Bp-6],word Ptr S; must be 2
-        MOV ax,[Bp-8]   ;must be 6
-        mov ax,[Bp-6]   ;must be 2
+        mul word Ptr [Bp+6] ; AX=AX*colon_count
+        Mov [Bp-2], AX; ;puts it into stack variable for this procedure
 
-        Mov [Bp-2], BX;
+;-------------------------------------------- starting experimenting part
+      ;  Mov [Bp-8], AX ;put inside 6
+       ; mov BX,AX       ;;ignore this line
+      ;  mov [Bp-6],word Ptr S; put inside  2
+      ;  MOV ax,[Bp-8]   ;must be 6
+      ;  mov ax,[Bp-6]   ;must be 2
 
+      ;  Mov [Bp-2], BX;
+;----------------------------------------------experimenting with stackp part
 
         mov Bx, [Bp+8] ;get Matrix adrres
-
-        Mov DI,[Bp+10];get VectorMov
-        
+        Mov DI,[Bp+10];get VectorMov  
         xor SI,SI
-        mov    Cx,[Bp+6]
+        mov   Cx,[Bp+6] ;get colon caunt
+        
 ;--nested loop        
 Rows:   Push    Cx
 
