@@ -2,8 +2,7 @@ Comment &
   Atrast katrâ rindiòâ elementu daudzumu diapazonâ [Min, Max]
 &
 ;!!!!! BE AWARE HERE ARE SOMETHING PROBLEMS WITH MEMORY. I FORGET WHAT KIND OF
-.model small
-.stack 100
+.model tiny
 .data
 N    Equ 2 ;rows
 M     Equ    3 ;colons

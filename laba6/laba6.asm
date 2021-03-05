@@ -12,9 +12,9 @@
 include forvec.asm
 include print.asm
 include gprint.asm
-.model tiny
+.model tiny ;be aware graphics works only for tiny models not for small because uses same seg of memory
 ;.data
-.386 ;this fixes jump out of memory error
+.386 ;this fixes jump out of memory error //also works for .586
 ;https://stackoverflow.com/questions/16751025/relative-jump-out-of-range-by-0020h-bytes
 .code
 .startup

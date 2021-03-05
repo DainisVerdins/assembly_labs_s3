@@ -7,10 +7,10 @@ Comment &
 ;DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 ; TODO CHECK ON TEST EXAMPLES I AM NOT SURE WHAT ALL IS FINE
 
-.model small
+.model small ;More for using preaty debugger mode(only can be used in .exe files) than td basic one for .com files
 .stack 256
 .data
-N    Equ 2 ;rows
+N     Equ 2 ;rows
 M     Equ    3 ;colons
 
 Min    Equ    2
@@ -21,7 +21,6 @@ Matrix    DW    16, 6, 1  ;
 Vector    DW    M Dup (?)
 
 S    Equ    Type Matrix
-
 .code
 
 ;------------------------------------------------------------------------
@@ -39,12 +38,19 @@ MatrixProcessing Proc
         push Bp
         mov Bp,Sp    ;get stack top
         
+        sub sp,8        ;;added now pART
         ;is var for what times increase BX index
         Local ROWSTEP:Word ;local var
-        Sub sp,2
         mov AX,S
         mul word Ptr [Bp+6] ;m
-        Mov [Bp-2], AX 
+        Mov [Bp-8], AX ;MUST BE 2
+        mov BX,AX       ;;ignore this line
+        mov [Bp-6],word Ptr S; must be 2
+        MOV ax,[Bp-8]   ;must be 6
+        mov ax,[Bp-6]   ;must be 2
+
+        Mov [Bp-2], BX;
+
 
         mov Bx, [Bp+8] ;get Matrix adrres
 
@@ -57,7 +63,7 @@ Rows:   Push    Cx
 
         Mov    Cx, [Bp+4]  ;loop rows length times ;
         Xor    Ax, Ax
-        XOR BX,BX ;?
+        XOR     BX,BX ;?
         xor    DX,DX
 
 Cols:   test [BX][SI], Word Ptr 1
